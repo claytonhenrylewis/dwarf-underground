@@ -5,9 +5,7 @@ class NavLinks extends Component {
   render() {
     return (
       <div className="float-right nav-links">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Log in</a>
+        {this.props.links.map(link => <a href="#">{link}</a>)}
       </div>
     );
   }
