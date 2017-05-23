@@ -29,7 +29,7 @@ class ArticleLinks extends Component {
             </button>
           </form>
           <ul className="comments">
-            {this.state.comments.map(this.renderComment)}
+            {this.state.comments.map((comment, i) => this.renderComment(comment, i))}
           </ul>
         </div>
       );
@@ -38,8 +38,8 @@ class ArticleLinks extends Component {
     }
   }
 
-  renderComment(comment) {
-    return <li>{comment}</li>;
+  renderComment(comment, i) {
+    return <li key={i}>{comment}</li>;
   }
 
   toggleShowComments() {
