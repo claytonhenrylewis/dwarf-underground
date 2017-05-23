@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './ArticleLinks.css';
+import Comments from './Comments';
 
 class ArticleLinks extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = JSON.parse(localStorage.getItem('state')) || {showComments: false, comments: []};
+    this.toggleShowComments = this.toggleShowComments.bind(this);
   }
 
   addComment(e) {
@@ -20,21 +22,10 @@ class ArticleLinks extends Component {
   renderComments() {
     if (this.state.showComments) {
       return (
-        <div>
-          <form onSubmit={this.addComment.bind(this)}>
-            <textarea className="comment" placeholder="Type your comment here" ref={(input) => this.commentText = input}></textarea>
-            <button type="submit" className="article-link">
-              <i className="fa fa-check"></i>
-              <span className="article-link-text">Submit</span>
-            </button>
-          </form>
-          <ul className="comments">
-            {this.state.comments.map((comment, i) => this.renderComment(comment, i))}
-          </ul>
-        </div>
+        <Comments />
       );
     } else {
-      return <div></div>;
+      return null;
     }
   }
 
@@ -42,7 +33,8 @@ class ArticleLinks extends Component {
     return <li key={i}>{comment}</li>;
   }
 
-  toggleShowComments() {
+  toggleShowComments(e) {
+    e.preventDefault();
     this.setState({showComments: !this.state.showComments});
     this.save();
   }
@@ -50,7 +42,7 @@ class ArticleLinks extends Component {
   render() {
     return (
       <div className="article-links">
-        <a className="article-link" onClick={this.toggleShowComments.bind(this)}>
+        <a className="article-link" onClick={this.toggleShowComments}>
           <i className="fa fa-comments-o"></i>
           <span className="article-link-text">Comments</span>
         </a>
