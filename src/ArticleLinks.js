@@ -4,7 +4,7 @@ import './ArticleLinks.css';
 class ArticleLinks extends Component {
   constructor() {
     super();
-    this.state = {showComments: false, comments: []};
+    this.state = JSON.parse(localStorage.getItem('state')) || {showComments: false, comments: []};
   }
 
   addComment(e) {
@@ -12,6 +12,9 @@ class ArticleLinks extends Component {
     const comments = [...this.state.comments];
     comments.push(this.commentText.value);
     this.setState({ comments });
+    console.log('hey');
+    console.log(this.state);
+    this.save();
   }
 
   renderComments() {
@@ -41,6 +44,7 @@ class ArticleLinks extends Component {
 
   toggleShowComments() {
     this.setState({showComments: !this.state.showComments});
+    this.save();
   }
 
   render() {
@@ -57,6 +61,10 @@ class ArticleLinks extends Component {
         {this.renderComments()}
       </div>
     );
+  }
+
+  save() {
+    window.localStorage.setItem('state', JSON.stringify(this.state));
   }
 }
 
